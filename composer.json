@@ -7,6 +7,7 @@
 	}
     },
     "require": {
-        "jms/serializer": "^3.17"
+        "jms/serializer": "^3.17",
+        "phpseclib/phpseclib": "^3.0"
     }
 }
