@@ -1,0 +1,12 @@
+{
+    "name": "pondersource/wsse",
+    "autoload": {
+	"psr-4": {
+	    "PonderSource\\WSSE\\":
+	    "PonderSource/WSSE"
+	}
+    },
+    "require": {
+        "jms/serializer": "^3.17"
+    }
+}
