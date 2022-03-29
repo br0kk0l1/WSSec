@@ -12,9 +12,20 @@ class Security {
     /**
      * @XmlAttributeMap
      */
-    private $attributes = ['S12:MustUnderstand' => 'true'];
+    private $attributes;
 
-    public function __construct(){
+    private $encryptionSecurityToken;
+
+    private $encryptedKey;
+
+    private $encryptedData;
+
+    private $signatureSecurityToken;
+
+    private $signature;
+
+    public function __construct($soap1_2NamespacePrefix = 'S12'){
+        $this->attributes[$soap1_2NamespacePrefix . ':MustUnderstand'] = 'true';
         return $this;
     }
 
