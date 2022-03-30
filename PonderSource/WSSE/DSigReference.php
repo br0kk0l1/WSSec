@@ -16,19 +16,19 @@ class DSigReference {
     private $uri;
 
     /**
-     * @XmlList(entry="Transform",namespace="http://www.w3.org/2000/09/xmldsig#") 
-     * @SerializedName("Transforms")
+     * @XmlList(entry="ds:Transform") 
+     * @SerializedName("ds:Transforms")
      */
     private $transforms;
 
     /**
-     * @SerializedName("DigestMethod")
+     * @SerializedName("ds:DigestMethod")
      * @XmlElement(cdata=false, namespace="http://www.w3.org/2000/09/xmldsig#")
      */
     private $digestMethod;
 
     /**
-     * @SerializedName("DigestValue")
+     * @SerializedName("ds:DigestValue")
      * @XmlElement(cdata=false, namespace="http://www.w3.org/2000/09/xmldsig#")
      */
     private $digestValue;

@@ -2,7 +2,7 @@
 
 namespace PonderSource\WSSE;
 
-use JMS\Serializer\Annotation\{XmlNamespace,XmlAttribute,SerializedName};
+use JMS\Serializer\Annotation\{XmlNamespace,XmlAttribute,SerializedName,XmlAttributeMap};
 
 /**
  * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd", prefix="wsse");
@@ -10,36 +10,28 @@ use JMS\Serializer\Annotation\{XmlNamespace,XmlAttribute,SerializedName};
  */
 class SecurityTokenReference {
     /**
-     * @XmlAttribute
-     * @SerializedName("Id")
+     * @XmlAttributeMap
      */
-    private $id;
+    private array $attributes;
 
     /**
-     * @XmlAttribute
-     * @SerializedName("TokenType")
+     * @SerializedName("wsse:Reference")
      */
-    private $tokenType;
+    private WSSecReference $reference;
 
-    /**
-     * @SerializedName("Reference")
-     */
-    private $reference;
-
-    public function __construct($id, $reference, $tokenType = null){
-        $this->id = $id;
+    public function __construct(WSSecReference $reference, array $attributes = []){
         $this->reference = $reference;
-        $this->tokenType = $tokenType;
+        $this->attributes = $attributes;
         return $this;
     }
 
     public function setId($id){
-        $this->id = $id;
+        $this->attributes['Id'] = $id;
         return $this;
     }
 
     public function getId(){
-        return $this->id;
+        return $this->attributes['Id'];
     }
 
     public function setReference($reference){
@@ -52,11 +44,20 @@ class SecurityTokenReference {
     }
 
     public function setTokenType($tokenType){
-        $this->tokenType = $tokenType;
+        $this->attributes['TokenType'] = $tokenType;
         return $this;
     }
 
     public function getTokenType(){
         return $this->tokenType;
+    }
+
+    public function setAttributes($attributes){
+        $this->attributes = $attributes;
+        return $this;
+    }
+
+    public function getAttributes(){
+        return $this->attributes;
     }
 }

@@ -20,7 +20,7 @@ class WSSecReference {
      */
     private $uri;
 
-    public function __construct($uri, $valueType = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3") {
+    public function __construct($uri, $valueType = null) {
         $this->uri = $uri;
         $this->valueType = $valueType;
         return $this;

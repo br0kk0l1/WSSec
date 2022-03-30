@@ -10,18 +10,18 @@ use JMS\Serializer\SerializerBuilder;
  */
 class Signature {
     /**
-     * @SerializedName("SignedInfo") 
+     * @SerializedName("ds:SignedInfo") 
      */
     private $signedInfo;
 
     /**
-     * @SerializedName("SignatureValue")
+     * @SerializedName("ds:SignatureValue")
      * @XmlElement(cdata=false)
      */
     private $signatureValue;
 
     /**
-     * @SerializedName("KeyInfo")
+     * @SerializedName("ds:KeyInfo")
      */
     private $keyInfo;
 

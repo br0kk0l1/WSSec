@@ -2,14 +2,15 @@
 
 namespace PonderSource\WSSE;
 
-use JMS\Serializer\Annotation\{XmlNamespace, XmlAttribute, SerializedName};
+use JMS\Serializer\Annotation\{XmlRoot, XmlNamespace, XmlAttribute, SerializedName};
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#", prefix="ds")
+ * @XmlRoot("ds:KeyInfo")
  */
 class KeyInfo {
     /**
-     * @SerializedName("SecurityTokenReference")
+     * @SerializedName("wsse:SecurityTokenReference")
      */
     private $securityTokenReference;
 
@@ -19,7 +20,7 @@ class KeyInfo {
      */
     private $id;
    
-    public function __construct($securityTokenReference, $id){
+    public function __construct($securityTokenReference, $id=null){
         $this->securityTokenReference = $securityTokenReference;
         $this->id = $id;
         return $this;

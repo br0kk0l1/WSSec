@@ -1,13 +1,9 @@
 <?php
 
 namespace PonderSource\WSSE;
-/**
- * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#")
- * @SerializedName("EncryptionMethod")
- */
-class EncryptionMethod {
-    private $algorithm;
-    private $digestMethod;
-    private $mgf;
 
+interface EncryptionMethod {
+    public function getUri();
+    public function encrypt(string $data, $key);
+    public function decrypt(string $data, $key);
 }

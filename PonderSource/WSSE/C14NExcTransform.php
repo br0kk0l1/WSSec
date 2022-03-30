@@ -2,8 +2,11 @@
 
 namespace PonderSource\WSSE;
 
-use JMS\Serializer\Annotation\{XmlAttribute,SerializedName};
-
+use JMS\Serializer\Annotation\{XmlRoot,XmlNamespace,XmlAttribute,SerializedName};
+/**
+ * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#",prefix="ds")
+ * @XmlRoot("ds:Transform")
+ */
 class C14NExcTransform implements Transform {
     /**
      * @XmlAttribute

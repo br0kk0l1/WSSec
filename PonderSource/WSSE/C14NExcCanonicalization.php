@@ -6,6 +6,7 @@ use JMS\Serializer\Annotation\{XmlNamespace,XmlAttribute,SerializedName,XmlValue
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#")
+ * @XmlNamespace(uri="http://www.w3.org/2001/10/xml-exc-c14n#", prefix="ec")
  */
 class C14NExcCanonicalization implements CanonicalizationMethod {
     /**
@@ -14,7 +15,7 @@ class C14NExcCanonicalization implements CanonicalizationMethod {
     private $uri = "http://www.w3.org/2001/10/xml-exc-c14n#";
 
     /**
-     * @SerializedName("InclusiveNamespaces")
+     * @SerializedName("ec:InclusiveNamespaces")
      * @XmlElement(cdata=false)
      */
     private $childElements;

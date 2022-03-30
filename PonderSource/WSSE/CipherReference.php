@@ -6,6 +6,7 @@ use JMS\Serializer\Annotation\{XmlNamespace,SerializedName,XmlAttribute,XmlList}
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#")
+ * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#", prefix="ds")
  */
 class CipherReference {
     /**
@@ -15,8 +16,8 @@ class CipherReference {
     private $uri;
 
     /**
-     * @SerializedName("Transforms")
-     * @XmlList(inline=true, entry="Transform", namespace="http://www.w3.org/2000/09/xmldsig#")
+     * @SerializedName("xenc:Transforms")
+     * @XmlList(inline=true, entry="ds:Transform")
      */
     private $transforms = [];
 
