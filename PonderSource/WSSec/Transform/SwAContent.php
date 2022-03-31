@@ -1,18 +1,19 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec\Transform;
 
-use JMS\Serializer\Annotation\{XmlAttribute,SerializedName};
+use JMS\Serializer\Annotation\{Type, XmlAttribute,SerializedName};
 
-class SwAContentTransform implements Transform {
+class SwAContent implements ITransform {
     /**
      * @XmlAttribute
      * @SerializedName("Algorithm")
+     * @Type("string")
      */
     private $uri = "http://docs.oasis-open.org/wss/oasis-wss-SwAProfile-1.1#Attachment-Content-Signature-Transform";
 
     public function getUri() {
-        return SwAContentTransform::$uri;
+        return SwAContent::$uri;
     }
     public function transform($value) {
         return $value;

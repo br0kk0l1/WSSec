@@ -1,6 +1,6 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
 use JMS\Serializer\Annotation\{XmlNamespace,Type,SerializedName,XmlList};
 
@@ -10,23 +10,26 @@ use JMS\Serializer\Annotation\{XmlNamespace,Type,SerializedName,XmlList};
 class SignedInfo {
     /**
      * @SerializedName("ds:CanonicalizationMethod")
+     * @Type("PonderSource\WSSec\CanonicalizationMethod\ICanonicalizationMethod")
      */
     private $canonicalizationMethod;
 
     /**
      * @SerializedName("ds:SignatureMethod")
+     * @Type("PonderSource\WSSec\SignatureMethod\ISignatureMethod")
      */
     private $signatureMethod;
 
     /**
      * @XmlList(inline=true, entry="ds:Reference")
+     * @Type("array")
      */
     private $references = [];
 
     public function __construct($signatureMethod, $canonicalizationMethod=null){
         $this->signatureMethod = $signatureMethod;
         if(is_null($canonicalizationMethod)){
-            $this->canonicalizationMethod = new C14NExcCanonicalizationMethod();
+            $this->canonicalizationMethod = new CanonicalizationMethod\C14NExcCanonicalizationMethod();
         } else {
             $this->canonicalizationMethod = $canonicalizationMethod;
         }

@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlNamespace,XmlAttribute,SerializedName,XmlAttributeMap};
+use JMS\Serializer\Annotation\{Type, XmlNamespace,XmlAttribute,SerializedName,XmlAttributeMap};
 
 /**
  * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd", prefix="wsse");
@@ -11,15 +11,17 @@ use JMS\Serializer\Annotation\{XmlNamespace,XmlAttribute,SerializedName,XmlAttri
 class SecurityTokenReference {
     /**
      * @XmlAttributeMap
+     * @Type("array<string,string>")
      */
-    private array $attributes;
+    private $attributes;
 
     /**
      * @SerializedName("wsse:Reference")
+     * @Type("PonderSource\WSSec\WSSecReference")
      */
-    private WSSecReference $reference;
+    private $reference;
 
-    public function __construct(WSSecReference $reference, array $attributes = []){
+    public function __construct($reference,  $attributes = []){
         $this->reference = $reference;
         $this->attributes = $attributes;
         return $this;

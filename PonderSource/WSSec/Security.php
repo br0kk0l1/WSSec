@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlNamespace,XmlRoot,SerializedName,XmlAttributeMap};
+use JMS\Serializer\Annotation\{Type, XmlNamespace,XmlRoot,SerializedName,XmlAttributeMap};
 
 /**
  * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd", prefix="wsse");
@@ -12,31 +12,37 @@ use JMS\Serializer\Annotation\{XmlNamespace,XmlRoot,SerializedName,XmlAttributeM
 class Security {
     /**
      * @XmlAttributeMap
+     * @Type("array<string,string>")
      */
     private $attributes;
 
     /**
      * @SerializedName("wsse:BinarySecurityToken")
+     * @Type("PonderSource\WSSec\BinarySecurityToken")
      */
     private $encryptionSecurityToken;
 
     /**
      * @SerializedName("xenc:EncryptedKey")
+     * @Type("PonderSource\WSSec\EncryptedKey")
      */
     private $encryptedKey;
 
     /**
      * @SerializedName("xenc:EncryptedData")
+     * @Type("PonderSource\WSSec\EncryptedData")
      */
     private $encryptedData;
 
     /**
      * @SerializedName("wsse:BinarySecurityToken")
+     * @Type("PonderSource\WSSec\BinarySecurityToken")
      */
     private $signatureSecurityToken;
 
     /**
      * @SerializedName("ds:Signature")
+     * @Type("PonderSource\WSSec\Signature")
      */
     private $signature;
 
@@ -75,8 +81,8 @@ class Security {
         $encryptedKey = new EncryptedKey();
         $encryptedKey->setId($keyId);
         $encryptedKey->setEncryptionMethod(
-            new RSAOEAPEncryptionMethod(
-                new SHA256DigestMethod(), 
+            new EncryptionMethod\RsaOeap(
+                new DigestMethod\SHA256(), 
                 new MGF('http://www.w3.org/2001/04/xmlenc11#mgf1sha256')));
         $encryptedKey->setKeyInfo(
             new KeyInfo(
@@ -92,13 +98,13 @@ class Security {
             $id=$dataId,
             $mimeType='application/gzip',
             $dataType='http://docs.oasis-open.org/wss/oasis-wss-SwAProfile-1.1#Attachment-Content-Only',
-            $encryptionMethod=new AES128GCMEncryptionMethod(),
+            $encryptionMethod=new EncryptionMethod\AES128GCM(),
             $keyInfo=new KeyInfo(
                 new WSSecReference(
                     '#' . $keyId,
                     'http://docs.oasis-open.org/wss/oasis-wss-soap-message-security-1.1#EncryptedKey')),
             $cipherData=new CipherData(
-                new CipherReference($cid, [new SwAContentTransform()])));
+                new CipherReference($cid, [new Transform\SwAContent()])));
         $this->encryptionSecurityToken = new BinarySecurityToken($tokenId, $certificate);
         $this->encryptedKey = $encryptedKey;
         $this->encryptedData = $encryptedData;

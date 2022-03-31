@@ -1,27 +1,30 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec\EncryptionMethod;
 
-use JMS\Serializer\Annotation\{Inline,XmlNamespace,XmlAttribute,SerializedName};
+use JMS\Serializer\Annotation\{Type, Inline,XmlNamespace,XmlAttribute,SerializedName};
 use phpseclib3\Crypt\{AES,Random};
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#")
  */
-class RSAOEAPEncryptionMethod implements EncryptionMethod {
+class RsaOeap implements IEncryptionMethod {
     /**
      * @XmlAttribute
      * @SerializedName("Algorithm")
+     * @Type("string")
      */
     private string $algorithm = "http://www.w3.org/2009/xmlenc11#rsa-oaep";
 
     /**
      * @SerializedName("ds:DigestMethod")
+     * @Type("PonderSource\WSSec\DigestMethod\IDigestMethod")
      */
     private $digestMethod;
 
     /**
      * @SerializedName("xenc11:MGF")
+     * @Type("PonderSource\WSSec\MGF")
      */
     private $mgf;
 

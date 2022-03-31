@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlNamespace,SerializedName,XmlAttribute,XmlList};
+use JMS\Serializer\Annotation\{Type, XmlNamespace,SerializedName,XmlAttribute,XmlList};
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#")
@@ -12,12 +12,14 @@ class CipherReference {
     /**
      * @SerializedName("URI")
      * @XmlAttribute
+     * @Type("string")
      */
     private $uri;
 
     /**
      * @SerializedName("xenc:Transforms")
      * @XmlList(inline=true, entry="ds:Transform")
+     * @Type("array<PonderSource\WSSec\Transform\ITransform>")
      */
     private $transforms = [];
 

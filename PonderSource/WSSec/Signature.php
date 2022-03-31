@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlNamespace,SerializedName,XmlElement};
+use JMS\Serializer\Annotation\{Type, XmlNamespace,SerializedName,XmlElement};
 use JMS\Serializer\SerializerBuilder;
 
 /**
@@ -11,17 +11,20 @@ use JMS\Serializer\SerializerBuilder;
 class Signature {
     /**
      * @SerializedName("ds:SignedInfo") 
+     * @Type("PonderSource\WSSec\SignedInfo")
      */
     private $signedInfo;
 
     /**
      * @SerializedName("ds:SignatureValue")
      * @XmlElement(cdata=false)
+     * @Type("string")
      */
     private $signatureValue;
 
     /**
      * @SerializedName("ds:KeyInfo")
+     * @Type("PonderSource\WSSec\KeyInfo")
      */
     private $keyInfo;
 

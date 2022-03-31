@@ -1,6 +1,6 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
 use JMS\Serializer\Annotation\{XmlRoot, XmlNamespace,XmlAttribute,SerializedName,Type};
 
@@ -28,17 +28,17 @@ class EncryptedData {
      */
     private $type;
     /**
-     * @Type("PonderSource\WSSE\EncryptionMethod")
+     * @Type("PonderSource\WSSec\EncryptionMethod\IEncryptionMethod")
      * @SerializedName("xenc:EncryptionMethod")
      */
     private $encryptionMethod;
     /**
-     * @Type("PonderSource\WSSE\KeyInfo")
+     * @Type("PonderSource\WSSec\KeyInfo")
      * @SerializedName("ds:KeyInfo")
      */
     private $keyInfo;
     /**
-     * @Type("PonderSource\WSSE\CipherData")
+     * @Type("PonderSource\WSSec\CipherData")
      * @SerializedName("xenc:CipherData")
      */
     private $cipherData;

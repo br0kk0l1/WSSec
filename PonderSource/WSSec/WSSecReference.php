@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlNamespace,SerializedName,XmlAttribute};
+use JMS\Serializer\Annotation\{Type, XmlNamespace,SerializedName,XmlAttribute};
 
 /**
  * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
@@ -11,12 +11,14 @@ class WSSecReference {
     /**
      * @SerializedName("ValueType")
      * @XmlAttribute
+     * @Type("string")
      */
     private $valueType;
 
     /**
      * @SerializedName("URI")
      * @XmlAttribute
+     * @Type("string")
      */
     private $uri;
 

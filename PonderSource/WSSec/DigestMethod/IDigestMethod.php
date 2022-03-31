@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec\DigestMethod;
 
-interface DigestMethod {
+interface IDigestMethod {
     public function getUri();
     public function getDigest($value);
 }

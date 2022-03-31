@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlRoot, XmlNamespace, XmlAttribute, SerializedName};
+use JMS\Serializer\Annotation\{Type, XmlRoot, XmlNamespace, XmlAttribute, SerializedName};
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#", prefix="ds")
@@ -11,12 +11,14 @@ use JMS\Serializer\Annotation\{XmlRoot, XmlNamespace, XmlAttribute, SerializedNa
 class KeyInfo {
     /**
      * @SerializedName("wsse:SecurityTokenReference")
+     * @Type("PonderSource\WSSec\SecurityTokenReference")
      */
     private $securityTokenReference;
 
     /**
      * @SerializedName("Id")
      * @XmlAttribute
+     * @Type("string")
      */
     private $id;
    

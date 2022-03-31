@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlRoot, XmlAttribute, SerializedName, XmlValue, Exclude};
+use JMS\Serializer\Annotation\{Type, XmlRoot, XmlAttribute, SerializedName, XmlValue, Exclude};
 use phpseclib3\Crypt\RSA;
 use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\File\X509;
@@ -13,18 +13,21 @@ class BinarySecurityToken {
     /**
      * @XmlAttribute
      * @SerializedName("EncodingType")
+     * @Type("string")
      */
     private $encodingType = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary';
 
     /**
      * @XmlAttribute
      * @SerializedName("ValueType")
+     * @Type("string")
      */
     private $valueType = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#x509v3';
 
     /**
      * @XmlAttribute
      * @SerializedName("wsu:Id")
+     * @Type("string")
      */
     private $id;
     
@@ -35,6 +38,7 @@ class BinarySecurityToken {
     
     /**
      * @XmlValue(cdata=false)
+     * @Type("string")
      */
     private $encryptionToken;
 

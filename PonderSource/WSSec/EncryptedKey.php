@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlRoot,XmlNamespace,XmlAttribute,SerializedName,XmlList};
+use JMS\Serializer\Annotation\{Type, XmlRoot,XmlNamespace,XmlAttribute,SerializedName,XmlList};
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#", prefix="xenc")
@@ -12,27 +12,32 @@ class EncryptedKey {
     /**
      * @XmlAttribute
      * @SerializedName("Id")
+     * @Type("string")
      */
     private $id;
 
     /**
      * @SerializedName("xenc:EncryptionMethod") 
+     * @Type("PonderSource\WSSec\EncryptionMethod\IEncryptionMethod")
      */
     private $encryptionMethod;
 
     /**
      * @SerializedName("ds:KeyInfo")
+     * @Type("PonderSource\WSSec\KeyInfo")
      */
     private $keyInfo;
 
     /**
      * @SerializedName("xenc:CipherData")
+     * @Type("PonderSource\WSSec\CipherData")
      */
     private $cipherData;
 
     /**
      * @XmlList(entry="xenc:DataReference")
      * @SerializedName("xenc:ReferenceList")
+     * @Type("array<PonderSource\WSSec\DataReference>")
      */
     private $referenceList = [];
 

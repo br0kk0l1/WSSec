@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec\Transform;
 
-interface Transform {
+interface ITransform {
     public function getUri();
     public function transform($value);
 }

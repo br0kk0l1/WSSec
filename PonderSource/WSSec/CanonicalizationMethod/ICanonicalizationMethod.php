@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec\CanonicalizationMethod;
 
-interface CanonicalizationMethod {
+interface ICanonicalizationMethod {
     public function getAlgorithmUri();
     public function getChildElements();
     public function applyAlgorithm($value);

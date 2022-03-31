@@ -1,22 +1,25 @@
 <?php 
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec\CanonicalizationMethod;
 
-use JMS\Serializer\Annotation\{XmlNamespace,XmlAttribute,SerializedName,XmlValue,XmlElement};
+use JMS\Serializer\Annotation\{Type,XmlNamespace,XmlAttribute,SerializedName,XmlValue,XmlElement};
+use PonderSource\WSSec\InclusiveNamespaces;
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#")
  * @XmlNamespace(uri="http://www.w3.org/2001/10/xml-exc-c14n#", prefix="ec")
  */
-class C14NExcCanonicalization implements CanonicalizationMethod {
+class C14NExclusive implements ICanonicalizationMethod {
     /**
      * @XmlAttribute
+     * @Type("string")
      */
     private $uri = "http://www.w3.org/2001/10/xml-exc-c14n#";
 
     /**
      * @SerializedName("ec:InclusiveNamespaces")
      * @XmlElement(cdata=false)
+     * @Type("PonderSource\WSSec\InclusiveNamespaces")
      */
     private $childElements;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlNamespace, XmlAttribute, SerializedName};
+use JMS\Serializer\Annotation\{Type, XmlNamespace, XmlAttribute, SerializedName};
 
 /**
  * @XmlNamespace(uri="http://www.w3.org/2009/xmlenc11#", prefix="xenc11")
@@ -11,6 +11,7 @@ class MGF {
     /**
      * @XmlAttribute
      * @SerializedName("Algorithm")
+     * @Type("string")
      */
     private $algorithm;
 

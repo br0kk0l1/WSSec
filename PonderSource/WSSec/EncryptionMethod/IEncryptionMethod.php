@@ -1,8 +1,8 @@
 <?php
 
-namespace PonderSource\WSSE;
+namespace PonderSource\WSSec\EncryptionMethod;
 
-interface EncryptionMethod {
+interface IEncryptionMethod {
     public function getUri();
     public function encrypt(string $data, $key);
     public function decrypt(string $data, $key);
