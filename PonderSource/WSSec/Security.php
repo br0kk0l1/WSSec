@@ -87,20 +87,21 @@ class Security {
         $tokenId = uniqid('X509-');
 
         $encryptedKey = new EncryptedKey();
-        $encryptedKey->setId($keyId);
-        $encryptedKey->setEncryptionMethod(
-            new EncryptionMethod\RsaOeap(
-                new DigestMethod\SHA256(), 
-                new MGF('http://www.w3.org/2001/04/xmlenc11#mgf1sha256')));
-        $encryptedKey->setKeyInfo(
-            new KeyInfo(
-                new WSSecReference(
-                    '#' . $tokenId, 
-                    'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3')));
-        $encryptedKey->setCipherData(
-            new CipherData(
-                $encryptedKey->getEncryptionMethod()->encrypt($encryptionKey, $certificate->getPublicKey())));
-        $encryptedKey->setReferenceList([new DataReference('#' . $dataId)]);
+        $encryptedKey->setId($keyId)
+                     ->setEncryptionMethod(
+                        new EncryptionMethod\RsaOeap(
+                            new DigestMethod\SHA256(), 
+                            new MGF('http://www.w3.org/2001/04/xmlenc11#mgf1sha256')))
+                     ->setKeyInfo(
+                        new KeyInfo(
+                            new SecurityTokenReference(
+                                new WSSecReference(
+                                    '#' . $tokenId, 
+                                    'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#X509v3'))))
+                     ->setCipherData(
+                        new CipherData(
+                            $encryptedKey->getEncryptionMethod()->encrypt($encryptionKey, $certificate->getPublicKey())))
+                     ->setReferenceList([new DataReference('#' . $dataId)]);
 
         $encryptedData = new EncryptedData(
             $id=$dataId,
@@ -108,9 +109,10 @@ class Security {
             $dataType='http://docs.oasis-open.org/wss/oasis-wss-SwAProfile-1.1#Attachment-Content-Only',
             $encryptionMethod=new EncryptionMethod\AES128GCM(),
             $keyInfo=new KeyInfo(
-                new WSSecReference(
-                    '#' . $keyId,
-                    'http://docs.oasis-open.org/wss/oasis-wss-soap-message-security-1.1#EncryptedKey')),
+                new SecurityTokenReference(
+                    new WSSecReference(
+                        '#' . $keyId,
+                        'http://docs.oasis-open.org/wss/oasis-wss-soap-message-security-1.1#EncryptedKey'))),
             $cipherData=new CipherData(
                 new CipherReference($cid, [new Transform('http://docs.oasis-open.org/wss/oasis-wss-SwAProfile-1.1#Attachment-Content-Signature-Transform')])));
         $this->encryptionSecurityToken = new BinarySecurityToken($tokenId, $certificate);
