@@ -2,29 +2,33 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace,SerializedName,XmlElement};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot,XmlElement,Type,XmlNamespace,SerializedName};
 use JMS\Serializer\SerializerBuilder;
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#", prefix="ds")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("ds:Signature")
  */
 class Signature {
     /**
-     * @SerializedName("ds:SignedInfo") 
+     * @SerializedName("SignedInfo") 
      * @Type("PonderSource\WSSec\SignedInfo")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $signedInfo;
 
     /**
-     * @SerializedName("ds:SignatureValue")
-     * @XmlElement(cdata=false)
+     * @SerializedName("SignatureValue")
+     * @XmlElement(cdata=false, namespace=Namespaces::DS)
      * @Type("string")
      */
     private $signatureValue;
 
     /**
-     * @SerializedName("ds:KeyInfo")
+     * @SerializedName("KeyInfo")
      * @Type("PonderSource\WSSec\KeyInfo")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $keyInfo;
 
@@ -54,7 +58,7 @@ class Signature {
 
     public function sign($pkey){
         $serializer = SerializerBuilder::create()->build();
-        $xml = $serializer->serialize($this, 'xml');
+        $xml = $serializer->serialize($this->signedInfo, 'xml');
         $xml = $this->signedInfo->getCanonicalizationMethod()->applyAlgorithm($xml);
         $signature = $this->signedInfo->getSignatureMethod()->sign($pkey,$xml);
         $this->signatureValue = $signature;

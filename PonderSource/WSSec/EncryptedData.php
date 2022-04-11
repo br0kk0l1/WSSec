@@ -2,10 +2,12 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlRoot, XmlNamespace,XmlAttribute,SerializedName,Type};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlElement,XmlRoot,XmlNamespace,XmlAttribute,SerializedName,Type};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#", prefix="xenc")
+ * @XmlNamespace(uri=Namespaces::XENC, prefix="xenc")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
  * @XmlRoot("xenc:EncryptedData")
  */
 class EncryptedData {
@@ -28,18 +30,21 @@ class EncryptedData {
      */
     private $type;
     /**
-     * @Type("PonderSource\WSSec\EncryptionMethod\IEncryptionMethod")
-     * @SerializedName("xenc:EncryptionMethod")
+     * @Type("PonderSource\WSSec\EncryptionMethod\AES128GCM")
+     * @SerializedName("EncryptionMethod")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $encryptionMethod;
     /**
      * @Type("PonderSource\WSSec\KeyInfo")
-     * @SerializedName("ds:KeyInfo")
+     * @SerializedName("KeyInfo")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $keyInfo;
     /**
      * @Type("PonderSource\WSSec\CipherData")
-     * @SerializedName("xenc:CipherData")
+     * @SerializedName("CipherData")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $cipherData;
 

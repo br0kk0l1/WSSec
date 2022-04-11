@@ -1,9 +1,9 @@
 {
-    "name": "pondersource/wsse",
+    "name": "pondersource/wssec",
     "autoload": {
 	"psr-4": {
-	    "PonderSource\\WSSE\\":
-	    "PonderSource/WSSE"
+	    "PonderSource\\WSSec\\":
+	    "PonderSource/WSSec"
 	}
     },
     "require": {

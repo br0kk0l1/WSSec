@@ -2,22 +2,25 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlElement, XmlNamespace, SerializedName};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot,Type,XmlElement,XmlNamespace,SerializedName};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#")
+ * @XmlNamespace(uri=Namespaces::XENC, prefix="xenc")
+ * @XmlRoot("xenc:CipherData")
  */
 class CipherData {
     /**
-     * @SerializedName("xenc:CipherValue")
-     * @XmlElement(cdata=false)
+     * @SerializedName("CipherValue")
+     * @XmlElement(cdata=false,namespace=Namespaces::XENC)
      * @Type("string")
      */
     private $cipherValue;
 
     /**
-     * @SerializedName("xenc:CipherReference")
+     * @SerializedName("CipherReference")
      * @Type("PonderSource\WSSec\CipherReference")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $cipherReference;
 

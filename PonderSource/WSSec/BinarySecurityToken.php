@@ -2,11 +2,13 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlRoot, XmlAttribute, SerializedName, XmlValue, Exclude};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlNamespace, Accessor, Type, XmlRoot, XmlAttribute, SerializedName, XmlValue, Exclude};
 use phpseclib3\Crypt\RSA;
 use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\File\X509;
 /**
+ * @XmlNamespace(uri=Namespaces::WSSE, prefix="wsse")
  * @XmlRoot("wsse:BinarySecurityToken")
  */
 class BinarySecurityToken {
@@ -25,8 +27,8 @@ class BinarySecurityToken {
     private $valueType = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-x509-token-profile-1.0#x509v3';
 
     /**
-     * @XmlAttribute
-     * @SerializedName("wsu:Id")
+     * @XmlAttribute(namespace=Namespaces::WSU)
+     * @SerializedName("Id")
      * @Type("string")
      */
     private $id;
@@ -38,13 +40,15 @@ class BinarySecurityToken {
     
     /**
      * @XmlValue(cdata=false)
+     * @Accessor(getter="getEncryptionToken", setter="setEncryptionToken")
      * @Type("string")
      */
     private $encryptionToken;
 
-    public function __construct($id, $cert){
+    public function __construct($id = '', $cert = null){
         $this->id = $id;
         $this->setCertificate($cert);
+        return $this;
     }
 
     public function setEncoding($encoding){
@@ -86,6 +90,14 @@ class BinarySecurityToken {
             return null;
         }
     }
+    public function getEncryptionToken() {
+        return $this->encryptionToken;
+    }
+    public function setEncryptionToken($token){
+        $this->encryptionToken = $token;
+        $this->x509Certificate = $this->token2Certificate($token);
+    }
+
     private function token2Certificate($token){
         $x509 = new X509;
         $x509->loadX509($token);

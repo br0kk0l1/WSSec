@@ -2,16 +2,18 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlRoot, XmlNamespace, XmlAttribute, SerializedName};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{Type,XmlRoot,XmlNamespace,XmlAttribute,SerializedName,XmlElement};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#", prefix="ds")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
  * @XmlRoot("ds:KeyInfo")
  */
 class KeyInfo {
     /**
-     * @SerializedName("wsse:SecurityTokenReference")
+     * @SerializedName("SecurityTokenReference")
      * @Type("PonderSource\WSSec\SecurityTokenReference")
+     * @XmlElement(namespace=Namespaces::WSSE)
      */
     private $securityTokenReference;
 

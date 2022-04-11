@@ -2,11 +2,13 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace,SerializedName,XmlAttribute,XmlList};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlElement,XmlRoot,Type,XmlNamespace,SerializedName,XmlAttribute,XmlList};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#")
- * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#", prefix="ds")
+ * @XmlNamespace(uri=Namespaces::XENC, prefix="xenc")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("xenc:CipherReference")
  */
 class CipherReference {
     /**
@@ -17,9 +19,10 @@ class CipherReference {
     private $uri;
 
     /**
-     * @SerializedName("xenc:Transforms")
-     * @XmlList(inline=true, entry="ds:Transform")
-     * @Type("array<PonderSource\WSSec\Transform\ITransform>")
+     * @SerializedName("Transforms")
+     * @XmlList(inline=true, entry="Transform", namespace=Namespaces::DS)
+     * @Type("array<PonderSource\WSSec\Transform>")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $transforms = [];
 

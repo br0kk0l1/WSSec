@@ -2,10 +2,12 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace,XmlAttribute,SerializedName,XmlList,XmlElement};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot, Type, XmlNamespace,XmlAttribute,SerializedName,XmlList,XmlElement};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("ds:Reference")
  */
 class DSigReference {
 
@@ -17,22 +19,22 @@ class DSigReference {
     private $uri;
 
     /**
-     * @XmlList(entry="ds:Transform") 
-     * @SerializedName("ds:Transforms")
-     * @Type("array<PonderSource\WSSec\Transform\ITransform>")
+     * @SerializedName("Transforms")
+     * @XmlList(inline=true, entry="Transform", namespace=Namespaces::DS) 
+     * @Type("array<PonderSource\WSSec\Transform>")
      */
     private $transforms;
 
     /**
-     * @SerializedName("ds:DigestMethod")
-     * @XmlElement(cdata=false, namespace="http://www.w3.org/2000/09/xmldsig#")
-     * @Type("PonderSource\WSSec\DigestMethod\IDigestMethod")
+     * @SerializedName("DigestMethod")
+     * @XmlElement(cdata=false, namespace=Namespaces::DS)
+     * @Type("PonderSource\WSSec\DigestMethod\SHA256")
      */
     private $digestMethod;
 
     /**
-     * @SerializedName("ds:DigestValue")
-     * @XmlElement(cdata=false, namespace="http://www.w3.org/2000/09/xmldsig#")
+     * @SerializedName("DigestValue")
+     * @XmlElement(cdata=false, namespace=Namespaces::DS)
      * @Type("string")
      */
     private $digestValue;

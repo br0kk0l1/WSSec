@@ -2,11 +2,14 @@
 
 namespace PonderSource\WSSec\EncryptionMethod;
 
-use JMS\Serializer\Annotation\{Type, Inline,XmlNamespace,XmlAttribute,SerializedName};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlElement,XmlRoot,Type,Inline,XmlNamespace,XmlAttribute,SerializedName};
 use phpseclib3\Crypt\{AES,Random};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#")
+ * @XmlNamespace(uri=Namespaces::XENC, prefix="xenc")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("xenc:EncryptionMethod")
  */
 class RsaOeap implements IEncryptionMethod {
     /**
@@ -17,14 +20,16 @@ class RsaOeap implements IEncryptionMethod {
     private string $algorithm = "http://www.w3.org/2009/xmlenc11#rsa-oaep";
 
     /**
-     * @SerializedName("ds:DigestMethod")
-     * @Type("PonderSource\WSSec\DigestMethod\IDigestMethod")
+     * @SerializedName("DigestMethod")
+     * @Type("PonderSource\WSSec\DigestMethod\SHA256")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $digestMethod;
 
     /**
-     * @SerializedName("xenc11:MGF")
+     * @SerializedName("MGF")
      * @Type("PonderSource\WSSec\MGF")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $mgf;
 

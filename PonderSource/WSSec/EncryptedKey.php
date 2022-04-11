@@ -2,10 +2,12 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlRoot,XmlNamespace,XmlAttribute,SerializedName,XmlList};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{Type,XmlRoot,XmlNamespace,XmlAttribute,SerializedName,XmlList,XmlElement};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2001/04/xmlenc#", prefix="xenc")
+ * @XmlNamespace(uri=Namespaces::XENC, prefix="xenc")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
  * @XmlRoot("xenc:EncryptedKey")
  */
 class EncryptedKey {
@@ -17,27 +19,31 @@ class EncryptedKey {
     private $id;
 
     /**
-     * @SerializedName("xenc:EncryptionMethod") 
-     * @Type("PonderSource\WSSec\EncryptionMethod\IEncryptionMethod")
+     * @SerializedName("EncryptionMethod") 
+     * @Type("PonderSource\WSSec\EncryptionMethod\RSaOeap")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $encryptionMethod;
 
     /**
-     * @SerializedName("ds:KeyInfo")
+     * @SerializedName("KeyInfo")
      * @Type("PonderSource\WSSec\KeyInfo")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $keyInfo;
 
     /**
-     * @SerializedName("xenc:CipherData")
+     * @SerializedName("CipherData")
      * @Type("PonderSource\WSSec\CipherData")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $cipherData;
 
     /**
-     * @XmlList(entry="xenc:DataReference")
-     * @SerializedName("xenc:ReferenceList")
+     * @XmlList(entry="DataReference", namespace=Namespaces::XENC)
+     * @SerializedName("ReferenceList")
      * @Type("array<PonderSource\WSSec\DataReference>")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $referenceList = [];
 

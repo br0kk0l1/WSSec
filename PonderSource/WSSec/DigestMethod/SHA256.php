@@ -2,8 +2,13 @@
 
 namespace PonderSource\WSSec\DigestMethod;
 
-use JMS\Serializer\Annotation\{Type, XmlAttribute, SerializedName};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlNamespace,XmlRoot,Type,XmlAttribute,SerializedName};
 
+/**
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("ds:DigestMethod")
+ */
 class SHA256 implements IDigestMethod {
     /**
      * @XmlAttribute

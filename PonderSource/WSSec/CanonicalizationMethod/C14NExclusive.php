@@ -2,12 +2,14 @@
 
 namespace PonderSource\WSSec\CanonicalizationMethod;
 
-use JMS\Serializer\Annotation\{Type,XmlNamespace,XmlAttribute,SerializedName,XmlValue,XmlElement};
+use JMS\Serializer\Annotation\{XmlRoot, Type,XmlNamespace,XmlAttribute,SerializedName,XmlValue,XmlElement};
 use PonderSource\WSSec\InclusiveNamespaces;
+use PonderSource\WSSec\Namespaces;
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#")
- * @XmlNamespace(uri="http://www.w3.org/2001/10/xml-exc-c14n#", prefix="ec")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlNamespace(uri=Namespaces::EC, prefix="ec")
+ * @XmlRoot("ds:CanonicalizationMethod")
  */
 class C14NExclusive implements ICanonicalizationMethod {
     /**
@@ -17,8 +19,8 @@ class C14NExclusive implements ICanonicalizationMethod {
     private $uri = "http://www.w3.org/2001/10/xml-exc-c14n#";
 
     /**
-     * @SerializedName("ec:InclusiveNamespaces")
-     * @XmlElement(cdata=false)
+     * @SerializedName("InclusiveNamespaces")
+     * @XmlElement(cdata=false, namespace=Namespaces::EC)
      * @Type("PonderSource\WSSec\InclusiveNamespaces")
      */
     private $childElements;

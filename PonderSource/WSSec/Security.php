@@ -2,59 +2,67 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace,XmlRoot,SerializedName,XmlAttributeMap};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlElement,Type,XmlNamespace,XmlRoot,SerializedName,XmlAttribute};
 
 /**
- * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd", prefix="wsse");
- * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd", prefix="wsu")
- * @XmlRoot("wsse:Security");
+ * @XmlNamespace(uri=Namespaces::WSSE, prefix="wsse")
+ * @XmlNamespace(uri=Namespaces::WSU, prefix="wsu")
+ * @XmlNamespace(uri=Namespaces::XENC, prefix="xenc")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("wsse:Security")
  */
 class Security {
     /**
-     * @XmlAttributeMap
-     * @Type("array<string,string>")
+     * @XmlAttribute
+     * @Type("boolean")
+     * @SerializedName("S12:MustUnderstand")
      */
-    private $attributes;
+    private $S12mustUnderstand = true;
 
     /**
-     * @SerializedName("wsse:BinarySecurityToken")
+     * @SerializedName("BinarySecurityToken")
      * @Type("PonderSource\WSSec\BinarySecurityToken")
+     * @XmlElement(namespace=Namespaces::WSSE)
      */
     private $encryptionSecurityToken;
 
     /**
-     * @SerializedName("xenc:EncryptedKey")
+     * @SerializedName("EncryptedKey")
      * @Type("PonderSource\WSSec\EncryptedKey")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $encryptedKey;
 
     /**
-     * @SerializedName("xenc:EncryptedData")
+     * @SerializedName("EncryptedData")
      * @Type("PonderSource\WSSec\EncryptedData")
+     * @XmlElement(namespace=Namespaces::XENC)
      */
     private $encryptedData;
 
     /**
-     * @SerializedName("wsse:BinarySecurityToken")
+     * @SerializedName("BinarySecurityToken")
      * @Type("PonderSource\WSSec\BinarySecurityToken")
+     * @XmlElement(namespace=Namespaces::WSSE)
      */
     private $signatureSecurityToken;
 
     /**
-     * @SerializedName("ds:Signature")
+     * @SerializedName("Signature")
      * @Type("PonderSource\WSSec\Signature")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $signature;
 
-    public function __construct($soap1_2NamespacePrefix = 'S12'){
-        $this->attributes[$soap1_2NamespacePrefix . ':MustUnderstand'] = 'true';
+    public function __construct(){
         return $this;
     }
 
     public function generateSignature($privateKey, $certificate, $references, $canonicaliztionMethod, $signatureMethod){
         $signedInfo = new SignedInfo($signatureMethod, $canonicaliztionMethod);
         foreach($references as $ref){
-            $signedInfo->addReference($references);
+            $signedInfo->addReference($ref);
         }
         $keyInfoId = uniqid("KI-");
         $securityTokenId = uniqid("STR-");
@@ -104,7 +112,7 @@ class Security {
                     '#' . $keyId,
                     'http://docs.oasis-open.org/wss/oasis-wss-soap-message-security-1.1#EncryptedKey')),
             $cipherData=new CipherData(
-                new CipherReference($cid, [new Transform\SwAContent()])));
+                new CipherReference($cid, [new Transform('http://docs.oasis-open.org/wss/oasis-wss-SwAProfile-1.1#Attachment-Content-Signature-Transform')])));
         $this->encryptionSecurityToken = new BinarySecurityToken($tokenId, $certificate);
         $this->encryptedKey = $encryptedKey;
         $this->encryptedData = $encryptedData;

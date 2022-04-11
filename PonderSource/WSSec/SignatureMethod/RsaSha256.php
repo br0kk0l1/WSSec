@@ -2,11 +2,13 @@
 
 namespace PonderSource\WSSec\SignatureMethod;
 
+use PonderSource\WSSec\Namespaces;
 use phpseclib3\Crypt\RSA;
-use JMS\Serializer\Annotation\{XmlAttribute,Type,SerializedName,XmlNamespace};
+use JMS\Serializer\Annotation\{XmlRoot,XmlAttribute,Type,SerializedName,XmlNamespace};
 
 /**
- * @XmlNamespace("http://www.w3.org/2000/09/xmldsig#")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("ds:SignatureMethod")
  */
 class RsaSha256 implements ISignatureMethod {
     /**

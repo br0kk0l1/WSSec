@@ -2,27 +2,31 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{XmlNamespace,Type,SerializedName,XmlList};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot,XmlElement,XmlNamespace,Type,SerializedName,XmlList};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2000/09/xmldsig#")
+ * @XmlNamespace(uri=Namespaces::DS, prefix="ds")
+ * @XmlRoot("ds:SignedInfo")
  */
 class SignedInfo {
     /**
-     * @SerializedName("ds:CanonicalizationMethod")
-     * @Type("PonderSource\WSSec\CanonicalizationMethod\ICanonicalizationMethod")
+     * @SerializedName("CanonicalizationMethod")
+     * @Type("PonderSource\WSSec\CanonicalizationMethod\C14NExclusive")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $canonicalizationMethod;
 
     /**
-     * @SerializedName("ds:SignatureMethod")
-     * @Type("PonderSource\WSSec\SignatureMethod\ISignatureMethod")
+     * @SerializedName("SignatureMethod")
+     * @Type("PonderSource\WSSec\SignatureMethod\RsaSha256")
+     * @XmlElement(namespace=Namespaces::DS)
      */
     private $signatureMethod;
 
     /**
-     * @XmlList(inline=true, entry="ds:Reference")
-     * @Type("array")
+     * @XmlList(inline=true, entry="Reference", namespace=Namespaces::DS)
+     * @Type("array<PonderSource\WSSec\DSigReference>")
      */
     private $references = [];
 

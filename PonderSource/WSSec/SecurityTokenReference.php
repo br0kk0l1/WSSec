@@ -2,38 +2,50 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace,XmlAttribute,SerializedName,XmlAttributeMap};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot,Type,XmlElement,XmlNamespace,XmlAttribute,SerializedName};
 
 /**
- * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd", prefix="wsse");
- * @XmlNamespace(uri="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd", prefix="wsse11")
+ * @XmlNamespace(uri=Namespaces::WSSE, prefix="wsse");
+ * @XmlNamespace(uri=Namespaces::WSSE11, prefix="wsse11")
+ * @XmlRoot("wsse:SecurityTokenReference")
  */
 class SecurityTokenReference {
     /**
-     * @XmlAttributeMap
-     * @Type("array<string,string>")
+     * @XmlAttribute
+     * @Type("string")
+     * @SerializedName("Id")
      */
-    private $attributes;
+    private $id;
 
     /**
-     * @SerializedName("wsse:Reference")
+     * @XmlAttribute
+     * @Type("string")
+     * @SerializedName("TokenType")
+     */
+    private $tokenType;
+
+    /**
+     * @SerializedName("Reference")
      * @Type("PonderSource\WSSec\WSSecReference")
+     * @XmlElement(namespace=Namespaces::WSSE)
      */
     private $reference;
 
     public function __construct($reference,  $attributes = []){
         $this->reference = $reference;
-        $this->attributes = $attributes;
+        isset($attributes['Id']) && $this->id = $attributes['Id'];
+        isset($attributes['TokenType']) && $this->tokenType = $attributes['TokenType'];
         return $this;
     }
 
     public function setId($id){
-        $this->attributes['Id'] = $id;
+        $this->id = $id;
         return $this;
     }
 
     public function getId(){
-        return $this->attributes['Id'];
+        return $this->id;
     }
 
     public function setReference($reference){
@@ -46,7 +58,7 @@ class SecurityTokenReference {
     }
 
     public function setTokenType($tokenType){
-        $this->attributes['TokenType'] = $tokenType;
+        $this->tokenType = $tokenType;
         return $this;
     }
 

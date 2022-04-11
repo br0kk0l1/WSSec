@@ -2,10 +2,13 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace, XmlAttribute, SerializedName};
+
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot,Type,XmlNamespace,XmlAttribute,SerializedName};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2009/xmlenc11#", prefix="xenc11")
+ * @XmlNamespace(uri=Namespaces::XENC11, prefix="xenc11")
+ * @XmlRoot("xenc11:MGF")
  */
 class MGF {
     /**

@@ -2,10 +2,12 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace,XmlAttribute,SerializedName};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot,Type,XmlNamespace,XmlAttribute,SerializedName};
 
 /**
- * @XmlNamespace(uri="http://www.w3.org/2001/10/xml-exc-c14n#",prefix="ec")
+ * @XmlNamespace(uri=Namespaces::EC,prefix="ec")
+ * @XmlRoot("ec:InclusiveNamespaces")
  */
 class InclusiveNamespaces{
     /**

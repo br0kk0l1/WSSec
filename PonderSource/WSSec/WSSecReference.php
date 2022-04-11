@@ -2,10 +2,12 @@
 
 namespace PonderSource\WSSec;
 
-use JMS\Serializer\Annotation\{Type, XmlNamespace,SerializedName,XmlAttribute};
+use PonderSource\WSSec\Namespaces;
+use JMS\Serializer\Annotation\{XmlRoot,Type,XmlNamespace,SerializedName,XmlAttribute};
 
 /**
- * @XmlNamespace(uri="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
+ * @XmlNamespace(uri=Namespaces::WSSE, prefix="wsse")
+ * @XmlRoot("wsse:Reference")
  */
 class WSSecReference {
     /**
