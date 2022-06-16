@@ -2,7 +2,10 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use PonderSource\WSSE\{RSAOEAPEncryptionMethod, AES128GCMEncryptionMethod,C14NExcTransform, SHA256DigestMethod,SwAContentTransform,Security,BinarySecurityToken,EncryptedKey,EncryptionMethod,DigestMethod,MGF,KeyInfo,SecurityTokenReference,WSSecReference,CipherData,CipherValue,CipherReference,ReferenceList,DataReference,EncryptedData,Signature,SignatureMethod,SignedInfo,CanonicalizationMethod,DSigReference,C14NExcCanonicalization,RsaSha256SignatureMethod};
+use PonderSource\WSSec\DigestMethod\SHA256;
+use PonderSource\WSSec\CanonicalizationMethod\C14NExclusive;
+use PonderSource\WSSec\DSigReference;
+use PonderSource\WSSE\{RSAOEAPEncryptionMethod, AES128GCMEncryptionMethod,SwAContentTransform,Security,BinarySecurityToken,EncryptedKey,EncryptionMethod,DigestMethod,MGF,KeyInfo,SecurityTokenReference,WSSecReference,CipherData,CipherValue,CipherReference,ReferenceList,DataReference,EncryptedData,Signature,SignatureMethod,SignedInfo,CanonicalizationMethod,C14NExcCanonicalization,RsaSha256SignatureMethod};
 use JMS\Serializer\SerializerBuilder;
 use phpseclib3\Crypt\{RSA, Random};
 use phpseclib3\File\X509;
@@ -36,8 +39,8 @@ $serverCertificate->setPrivateKey($serverPrivateKey);
 
 $encryptionKey = Random::string(32);
 
-$sha256 = new SHA256DigestMethod();
-$c14ne = new C14NExcTransform();
+$sha256 = new SHA256();
+$c14ne = new C14NExclusive();
 
 $references = [
     new DSigReference('#someid', '<some><content/></some>', [$c14ne], $sha256),
